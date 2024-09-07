@@ -1,0 +1,9 @@
+# Who's That Pokemon
+## A simple HTML/CSS/Javascript Who's that pokemon app
+
+Using the [PokeApi](https://pokeapi.co/), present the user with the shillouette of a pokemon and prompt them to guess it's name.
+
+### Coming Features:
+- Count of pokemon guessed correctly
+- option to set which pokemon you want in the guessing pool
+- a visual collection of the pokemon you've correctly guessed.
