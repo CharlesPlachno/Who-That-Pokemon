@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+:root {
+    --poke-red: #B83D43;
+    --poke-green: #0C7C59;
+    --poke-yellow: #DBBD6B;
+    --poke-cyan: #58A4B0;
+    --poke-blue: #274C77;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pixelify Sans', sans-serif;
+    overflow-x: hidden;
+    margin: 0px;
+}
+
+.header {
+    position: sticky;
+    width: 100%;
+    top: 0px;
+    background-color: var(--poke-red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: -10px -10px 10px rgba(66, 66, 66, 0.651) inset;
+}
+
+.header h3 {
+    color: white;
+    font-size: 3rem;
+}
+
+.pokeballBtn{
+    position: fixed;
+    background-color: lightgray;
+    border: black solid 4px;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    top: 7.5rem;
+}
+
+.pokeballBtn::before {
+    content: " ";
+    position: fixed;
+    height: 3rem;
+    width: 3rem;
+    margin-top: .25rem;
+    margin-left: .25rem;
+    background-color: white;
+    z-index: 20;
+    border-radius: 50%;
+
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+.imageArea {
+    position: relative;
+    display: flex;
+    height: 30vw;
+    width: 30vw;
+    border: 1rem solid var(--poke-red) ;
+    margin: 1rem;
+    border-radius: 75%;
+    background-color: white;
+    transition: background-color .3s ease;
+}
+.imageArea.success {
+    background-color: var(--poke-yellow)
+}
+.imageArea img {
+    position: relative;
+    filter: contrast(0) brightness(50%);
+    height:100%;
+    width:100%;
+    /* transition: filter .3s ease; */
+}
+
+.imageArea img.success {
+    filter: none;
+}
+
+.answerArea {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    justify-content: space-between;
+}
