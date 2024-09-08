@@ -2,11 +2,12 @@ const pokeImg = document.querySelector('.imageArea img');
 const answerIn = document.querySelector('input#answerIn');
 const answerBtn = document.querySelector('button#answerBtn');
 const nextPokeBtn = document.querySelector('.nextPoke');
+const collectionArea = document.querySelector('.collectionArea')
 
 const guessedPokes = []
 let unguessedPokes = []
 let currentPoke = 0
-let currentType = [undefined, undefined]
+let currentTypeColors = []
 
 const typeColors = {
 	normal: '#A8A77A',
@@ -29,6 +30,7 @@ const typeColors = {
 	fairy: '#D685AD',
 };
 
+// Functions
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -50,13 +52,25 @@ function setType(){
         .then((response) => response.json())
         .then((data) => {
             console.log(data.types)
-            pokeImg.parentNode.style.borderColor = typeColors[data.types[0].type.name]
+            let new_types = []
+            new_types.push(typeColors[data.types[0].type.name]) 
             if (data.types.length == 2) {
-                pokeImg.parentNode.style.outline = `.5rem solid ${typeColors[data.types[1].type.name]}`
-            } else {
-                pokeImg.parentNode.style.outline = 'none'
+                new_types.push(typeColors[data.types[1].type.name])
             }
+            currentTypeColors = new_types
+            setTypeBorderColor(pokeImg.parentNode);
         })
+}
+
+function setTypeBorderColor(element){
+    // Takes an element and determines its border colors based on current type
+    element.style.borderColor = currentTypeColors[0]
+    if (currentTypeColors.length == 2) {
+        element.style.outline = `.6rem solid ${currentTypeColors[1]}`
+    } else {
+        element.style.outline = 'none'
+    }
+
 }
 
 function getRandomPokemon() {
@@ -108,7 +122,7 @@ function verifyGuess(guess) {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${currentPoke}/`, config)
         .then((response) => response.json())
         .then((data) => {
-            let name = data.name.toLowerCase().replace('-f', '').replace('-m', '')
+            let name = data.name.toLowerCase().replace('-f', '').replace('-m', '').replace('-', ' ')
             if(guess.toLowerCase() == name) {
                 // SUCCESS LOGIC
                 console.log("success")
@@ -116,6 +130,7 @@ function verifyGuess(guess) {
                 removePoke(currentPoke);
                 pokeImg.classList.add('success')
                 pokeImg.parentNode.classList.add('success')
+                addPokeToCollection()
             } else {
                 //FAILURE LOGIC
                 console.log("failure")
@@ -123,12 +138,30 @@ function verifyGuess(guess) {
             }
         })
 }
-addPokeRange([1, 151])
-getRandomPokemon()
-logState()
-//add eventListeners
+
+function addPokeToCollection(){
+    const newPokeCard = document.createElement('div')
+    newPokeCard.classList.add('pokeCard')
+    const newPokeImg = document.createElement('img')
+    newPokeImg.classList.add('capturedPokeImg')
+
+    newPokeImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPoke}.png`
+    setTypeBorderColor(newPokeCard)
+    newPokeCard.style.borderWidth = '.5rem'
+    newPokeCard.style.outlineWidth = '.3rem'
+    
+    collectionArea.appendChild(newPokeCard)
+    newPokeCard.appendChild(newPokeImg)
+}
+
+// Add eventListeners
 answerBtn.addEventListener('click', () => {
-    submitGuess();
+    if(pokeImg.classList.contains('success')){
+        nextPoke();
+    }
+    else{
+        submitGuess();
+    }
 })
 answerIn.addEventListener('keydown', (event) => {
     if(event.key === 'Enter'){
@@ -143,3 +176,8 @@ answerIn.addEventListener('keydown', (event) => {
 nextPokeBtn.addEventListener('click', () => {
     nextPoke()
 })
+
+// Page logic
+addPokeRange([1, 151])
+getRandomPokemon()
+logState()
