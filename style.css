@@ -28,6 +28,7 @@ body {
     align-items: center;
     flex-direction: column;
     box-shadow: -10px -10px 10px rgba(66, 66, 66, 0.651) inset;
+    z-index: 20;
 }
 
 .header h3 {
@@ -96,4 +97,23 @@ body {
     flex-direction: column;
     height: 10vh;
     justify-content: space-between;
+    margin: 2rem;
+    background-color: var(--poke-yellow);
+    border-radius: 25px;
+    padding: 1rem;
+    box-shadow: 10px 10px 10px rgba(49, 49, 49, 0.397);
+}
+
+.collectionArea {
+    display: flex;
+    width: 100vw;
+    flex-flow: row wrap;
+    padding-inline: 1rem;
+}
+
+.pokeCard {
+    /* Container for captured pokes */
+    border: .5rem solid var(--poke-red) ;
+    margin: 1rem;
+    border-radius: 75%;
 }
