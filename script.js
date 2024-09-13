@@ -5,6 +5,7 @@ const nextPokeBtn = document.querySelector('.nextPoke');
 const collectionArea = document.querySelector('.collectionArea')
 const genDropBtn = document.querySelector('.genDropArea button')
 const genChecks = document.querySelectorAll('.genCheck')
+const count = document.querySelector('.count h2')
 // TODO:
 // make sure at least one gen checkbox is always checked
 // make gen checkboxes functional
@@ -149,6 +150,7 @@ function verifyGuess(guess) {
                 pokeImg.classList.add('success')
                 pokeImg.parentNode.classList.add('success')
                 addPokeToCollection()
+                updateCount()
             } else {
                 //FAILURE LOGIC
                 console.log("failure")
@@ -197,6 +199,9 @@ function areAllUnchecked(){
     })
     return(areUnchecked)
 }
+function updateCount(){
+    count.innerHTML = `${guessedPokes.length}/${unguessedPokes.length}`
+}
 
 function addGen(genNumber){
     genRange = generationRanges[genNumber]
@@ -212,6 +217,7 @@ function addGen(genNumber){
             unguessedPokes.push(i)
         }
     }
+    updateCount()
 }
 
 function removeGen(genNumber){
@@ -221,6 +227,7 @@ function removeGen(genNumber){
     }
     //reroll current poke in case it was from removed gen
     getRandomPokemon()
+    updateCount()
 }
 
 
@@ -277,4 +284,5 @@ genChecks.forEach((genCheck) => {
 addPokeRange([1, 151])
 getRandomPokemon()
 updateDropDisplay()
+updateCount()
 logState()
