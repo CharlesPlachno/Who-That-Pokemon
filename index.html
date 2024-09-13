@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Who's That Pokemon?</title>
+    <script src="https://kit.fontawesome.com/3117031501.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="header">
@@ -17,12 +18,58 @@
         <div class="imageArea">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png">
         </div>
-        <div class="answerArea">
-            <div class="textWithBtn">
-                <input type="text" id="answerIn">
-            <button id="answerBtn">Submit</button>
+        <div class="rightSideArea">
+            <div class="answerArea">
+                <div class="textWithBtn">
+                    <input type="text" id="answerIn">
+                    <button id="answerBtn">Submit</button>
+                </div>
+                <button class="nextPoke">Next</button>
             </div>
-            <button class="nextPoke">Next</button>
+            <div class="genDropArea">
+                <button class="genDrop">Select Gens...
+                    <i></i>
+                </button>
+            </div>
+            <div class="gensDisplay">
+                <div class="gen1 genCheck">
+                    <input type="checkbox" name="gen1" id="1" checked>
+                <label for="gen1">Generation I</label>
+                </div>
+                <div class="gen2 genCheck">
+                    <input type="checkbox" name="gen2" id="2">
+                    <label for="gen2">Generation II</label>
+                </div>
+                <div class="gen3 genCheck">
+                    <input type="checkbox" name="gen3" id="3">
+                    <label for="gen3">Generation III</label>
+                </div>
+                <div class="gen4 genCheck">
+                    <input type="checkbox" name="gen4" id="4">
+                    <label for="gen4">Generation IV</label>
+                </div>
+                <div class="gen5 genCheck">
+                    <input type="checkbox" name="gen5" id="5">
+                    <label for="gen5">Generation V</label>
+                </div>
+                <div class="gen6 genCheck">
+                    <input type="checkbox" name="gen6" id="6">
+                    <label for="gen6">Generation VI</label>
+                </div>
+                <div class="gen7 genCheck">
+                    <input type="checkbox" name="gen7" id="7">
+                    <label for="gen7">Generation VII</label>
+                </div>
+                <div class="gen8 genCheck">
+                    <input type="checkbox" name="gen8" id="8">
+                    <label for="gen8">Generation VIII</label>
+                </div>
+                <div class="gen9 genCheck">
+                    <input type="checkbox" name="gen9" id="9">
+                    <label for="gen9">Generation IX</label>
+                </div>
+
+            </div>
         </div>
     </div>
     <div class="collectionArea">

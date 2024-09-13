@@ -3,11 +3,19 @@ const answerIn = document.querySelector('input#answerIn');
 const answerBtn = document.querySelector('button#answerBtn');
 const nextPokeBtn = document.querySelector('.nextPoke');
 const collectionArea = document.querySelector('.collectionArea')
+const genDropBtn = document.querySelector('.genDropArea button')
+const genChecks = document.querySelectorAll('.genCheck')
+// TODO:
+// make sure at least one gen checkbox is always checked
+// make gen checkboxes functional
+// when you check a gen checkbox, add that range of numbers to unguessed - any that are already in guessed
+// when you uncheck a checkbox, remove any in that range from unchecked
 
 const guessedPokes = []
 let unguessedPokes = []
 let currentPoke = 0
 let currentTypeColors = []
+let dropDownStatus = false
 
 const typeColors = {
 	normal: '#A8A77A',
@@ -29,7 +37,17 @@ const typeColors = {
 	steel: '#B7B7CE',
 	fairy: '#D685AD',
 };
-
+const generationRanges = {
+    1: [1, 151],
+    2: [152, 251],
+    3: [252, 386],
+    4: [387, 493],
+    5: [494, 649],
+    6: [650, 721],
+    7: [722, 809],
+    8: [810, 905],
+    9: [906, 1025]
+}
 // Functions
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -153,6 +171,59 @@ function addPokeToCollection(){
     collectionArea.appendChild(newPokeCard)
     newPokeCard.appendChild(newPokeImg)
 }
+function updateDropDisplay(){
+    //Set the img for the dropdown button based on dropDownStatus
+    let chevronElement = genDropBtn.querySelector('i')
+    if(dropDownStatus){
+        chevronElement.className = 'fa-solid fa-chevron-up'
+        genChecks.forEach((genCheck) => {
+            genCheck.style.display = 'block'
+        })
+    }else {
+        chevronElement.className = 'fa-solid fa-chevron-down'
+        genChecks.forEach((genCheck) => {
+            genCheck.style.display = 'none'
+        })
+    }
+}
+function areAllUnchecked(){
+    let areUnchecked = true
+    genChecks.forEach((genCheck)=> {
+        let input = genCheck.querySelector('input')
+        console.log(input.checked)
+        if(input.checked) {
+            areUnchecked = false
+        }
+    })
+    return(areUnchecked)
+}
+
+function addGen(genNumber){
+    genRange = generationRanges[genNumber]
+    //loop through range, add poke only if it doesn't exist in guessed list
+    for(let i = genRange[0]; i < genRange[1]+1; i++){
+        let add = true
+        for(let j = 0; j < unguessedPokes.length; j++) {
+            if (unguessedPokes[j] == i){
+                add = false
+            }
+        }
+        if(add){
+            unguessedPokes.push(i)
+        }
+    }
+}
+
+function removeGen(genNumber){
+    genRange = generationRanges[genNumber]
+    for(let i = genRange[0]; i < genRange[1]+1; i++){
+        removePoke(i)
+    }
+    //reroll current poke in case it was from removed gen
+    getRandomPokemon()
+}
+
+
 
 // Add eventListeners
 answerBtn.addEventListener('click', () => {
@@ -176,8 +247,34 @@ answerIn.addEventListener('keydown', (event) => {
 nextPokeBtn.addEventListener('click', () => {
     nextPoke()
 })
+genDropBtn.addEventListener('click', () => {
+    genDropBtn.classList.toggle('active')
+    dropDownStatus = !dropDownStatus
+    updateDropDisplay()
+})
+genChecks.forEach((genCheck) => {
+    let input = genCheck.querySelector('input')    
+    input.addEventListener('input', () => {
+        //check here if all others are unchecked, then if this too is unchecked, check it and continue
+        if(areAllUnchecked()){
+            console.log('here')
+            input.checked = true
+        }else {
+            if(input.checked){
+                //add associated range to unguessed - already guessed
+                console.log(input.id)
+                addGen(input.id)
+            }else {
+                //remove associated range from unguessed
+                removeGen(input.id)
+                console.log('unchecked')
+            }
+        }
+    })
+})
 
 // Page logic
 addPokeRange([1, 151])
 getRandomPokemon()
+updateDropDisplay()
 logState()
