@@ -65,17 +65,19 @@ body {
     align-content: center;
     justify-content: center;
     margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 .imageArea {
     position: relative;
     display: flex;
-    height: 30vw;
-    width: 30vw;
+    height: 25vw;
+    width: 25vw;
     border: 1rem solid var(--poke-red) ;
     margin: 1rem;
     border-radius: 75%;
     background-color: white;
     transition: background-color .3s ease;
+    box-shadow: 10px 10px 10px rgba(49, 49, 49, 0.397);
 }
 .imageArea.success {
     background-color: var(--poke-yellow)
@@ -127,9 +129,11 @@ body {
 
 .collectionArea {
     display: flex;
-    width: 100vw;
+    width: 100%;
     flex-flow: row wrap;
     padding-inline: 1rem;
+    border-radius: 25px;
+    box-shadow: 10px 10px 10px rgba(49, 49, 49, 0.397) inset;
 }
 
 .pokeCard {

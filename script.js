@@ -186,6 +186,42 @@ function updateDropDisplay(){
         })
     }
 }
+function areAllUnchecked(){
+    let areUnchecked = true
+    genChecks.forEach((genCheck)=> {
+        let input = genCheck.querySelector('input')
+        console.log(input.checked)
+        if(input.checked) {
+            areUnchecked = false
+        }
+    })
+    return(areUnchecked)
+}
+
+function addGen(genNumber){
+    genRange = generationRanges[genNumber]
+    //loop through range, add poke only if it doesn't exist in guessed list
+    for(let i = genRange[0]; i < genRange[1]+1; i++){
+        let add = true
+        for(let j = 0; j < unguessedPokes.length; j++) {
+            if (unguessedPokes[j] == i){
+                add = false
+            }
+        }
+        if(add){
+            unguessedPokes.push(i)
+        }
+    }
+}
+
+function removeGen(genNumber){
+    genRange = generationRanges[genNumber]
+    for(let i = genRange[0]; i < genRange[1]+1; i++){
+        removePoke(i)
+    }
+    //reroll current poke in case it was from removed gen
+    getRandomPokemon()
+}
 
 
 
@@ -216,7 +252,26 @@ genDropBtn.addEventListener('click', () => {
     dropDownStatus = !dropDownStatus
     updateDropDisplay()
 })
-
+genChecks.forEach((genCheck) => {
+    let input = genCheck.querySelector('input')    
+    input.addEventListener('input', () => {
+        //check here if all others are unchecked, then if this too is unchecked, check it and continue
+        if(areAllUnchecked()){
+            console.log('here')
+            input.checked = true
+        }else {
+            if(input.checked){
+                //add associated range to unguessed - already guessed
+                console.log(input.id)
+                addGen(input.id)
+            }else {
+                //remove associated range from unguessed
+                removeGen(input.id)
+                console.log('unchecked')
+            }
+        }
+    })
+})
 
 // Page logic
 addPokeRange([1, 151])
